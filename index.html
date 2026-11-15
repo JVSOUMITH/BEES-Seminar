@@ -1,0 +1,2202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Magnetising Force (H) Produced by Electric Current | BEEE Seminar</title>
+  
+  <!-- Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* High-Contrast Presentation Theme */
+      --bg-dark: #03060E;
+      --bg-surface: rgba(8, 14, 28, 0.97);
+      --bg-surface-elevated: rgba(13, 22, 42, 0.98);
+      --border-subtle: rgba(56, 189, 248, 0.35);
+      --border-focus: rgba(0, 245, 255, 0.85);
+      
+      --cyan: #00F5FF;
+      --cyan-bright: #38BDF8;
+      --cyan-glow: rgba(0, 245, 255, 0.45);
+      --blue: #3B82F6;
+      --navy: #070D1A;
+      --amber: #FBBF24;
+      --amber-bright: #FDE047;
+      --amber-glow: rgba(251, 191, 36, 0.45);
+      --green: #34D399;
+      --red: #F87171;
+      
+      /* High Contrast Text Tiers */
+      --text-main: #FFFFFF;        /* 100% Crisp White */
+      --text-muted: #F1F5F9;       /* Bright Crisp Silver */
+      --text-dim: #E2E8F0;         /* Clear Visible Platinum */
+      
+      --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-serif: 'Cinzel', serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Ambient Background Glow */
+    #ambient-particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.45;
+    }
+
+    /* Top Navigation Bar */
+    header {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8rem 2rem;
+      background: rgba(3, 6, 14, 0.96);
+      border-bottom: 1.5px solid var(--border-subtle);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .badge-beee {
+      background: linear-gradient(135deg, rgba(0, 245, 255, 0.2), rgba(59, 130, 246, 0.3));
+      border: 1.5px solid var(--cyan);
+      color: var(--cyan);
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      font-weight: 800;
+      padding: 5px 12px;
+      border-radius: 6px;
+      letter-spacing: 0.08em;
+      box-shadow: 0 0 12px rgba(0, 245, 255, 0.25);
+    }
+
+    .seminar-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      letter-spacing: -0.01em;
+    }
+
+    .controls-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-action {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1.5px solid var(--border-subtle);
+      color: #FFFFFF;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-action:hover {
+      background: rgba(59, 130, 246, 0.25);
+      border-color: var(--cyan);
+      color: var(--cyan);
+      box-shadow: 0 0 14px rgba(0, 245, 255, 0.3);
+    }
+
+    /* Main Slide Viewport */
+    main {
+      position: relative;
+      z-index: 5;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem 2rem 5.5rem 2rem;
+    }
+
+    .slide-viewport {
+      width: 100%;
+      max-width: 1480px;
+      height: 84vh;
+      min-height: 660px;
+      position: relative;
+    }
+
+    .slide-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px) scale(0.995);
+      transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .slide-container.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+
+    /* Slide Header - High Impact */
+    .slide-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+      border-bottom: 1.5px solid rgba(56, 189, 248, 0.25);
+      padding-bottom: 0.75rem;
+    }
+
+    .slide-tag {
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--cyan-bright);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 4px;
+    }
+
+    .slide-title {
+      font-size: 2.15rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .slide-counter {
+      font-family: var(--font-mono);
+      font-size: 1.0rem;
+      font-weight: 800;
+      color: var(--cyan);
+      background: rgba(0, 245, 255, 0.12);
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1.5px solid var(--cyan);
+    }
+
+    /* Content Layout Grids */
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .grid-3col {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.5rem;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .col-card {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.5rem 1.75rem;
+      backdrop-filter: blur(10px);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      min-height: 0;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+    }
+
+    .col-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      opacity: 0.6;
+    }
+
+    /* Large High-Contrast Formula Cards */
+    .formula-hero {
+      background: rgba(4, 9, 20, 0.98);
+      border: 1.5px solid rgba(0, 245, 255, 0.5);
+      border-radius: 12px;
+      padding: 1.0rem 1.5rem;
+      text-align: center;
+      margin: 0.75rem 0;
+      box-shadow: 0 8px 24px rgba(0, 245, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+
+    .formula-tag {
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--amber);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .formula-img {
+      display: block;
+      margin: 0.5rem auto;
+      max-width: 100%;
+      height: auto;
+      filter: drop-shadow(0 0 14px rgba(0, 245, 255, 0.6));
+    }
+
+    .formula-sub {
+      font-family: var(--font-mono);
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #E2E8F0;
+      margin-top: 6px;
+    }
+
+    /* Clean Inline Monospace Math */
+    .m-var {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--cyan);
+      padding: 2px 6px;
+      background: rgba(0, 245, 255, 0.12);
+      border-radius: 4px;
+      font-style: italic;
+    }
+
+    .m-gold {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--amber);
+      padding: 2px 6px;
+      background: rgba(251, 191, 36, 0.15);
+      border-radius: 4px;
+    }
+
+    /* Typography Defaults for Classroom Presentation */
+    .card-h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--cyan);
+      margin-bottom: 0.65rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-p {
+      font-size: 1.08rem;
+      color: #FFFFFF;
+      line-height: 1.65;
+      margin-bottom: 1.0rem;
+    }
+
+    .card-list {
+      list-style: none;
+      font-size: 1.05rem;
+      color: #FFFFFF;
+      line-height: 1.8;
+      margin-bottom: 1.0rem;
+    }
+
+    .card-list li {
+      margin-bottom: 6px;
+    }
+
+    /* Interactive Sliders & Canvas Containers */
+    .canvas-wrapper {
+      position: relative;
+      flex: 1;
+      width: 100%;
+      background: #02040A;
+      border: 1.5px solid var(--border-subtle);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 260px;
+    }
+
+    .canvas-overlay-ctrls {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(3, 6, 14, 0.94);
+      border-top: 1.5px solid var(--border-subtle);
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      z-index: 5;
+    }
+
+    .slider-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .slider-label {
+      font-family: var(--font-mono);
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #E2E8F0;
+      white-space: nowrap;
+    }
+
+    .slider-input {
+      flex: 1;
+      accent-color: var(--cyan);
+      cursor: pointer;
+      height: 6px;
+    }
+
+    .val-badge {
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--cyan);
+      min-width: 65px;
+      text-align: right;
+    }
+
+    /* Tab Controls */
+    .tab-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .tab-btn {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1.5px solid var(--border-subtle);
+      color: #CBD5E1;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn.active {
+      background: rgba(0, 245, 255, 0.2);
+      border-color: var(--cyan);
+      color: var(--cyan);
+      font-weight: 800;
+      box-shadow: 0 0 12px rgba(0, 245, 255, 0.25);
+    }
+
+    /* Bottom Presentation Navigation */
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: 20;
+      background: rgba(3, 6, 14, 0.97);
+      border-top: 1.5px solid var(--border-subtle);
+      padding: 0.8rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(14px);
+    }
+
+    .progress-bar-container {
+      flex: 1;
+      max-width: 550px;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 3px;
+      overflow: hidden;
+      margin: 0 24px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--blue), var(--cyan));
+      width: 7.14%;
+      transition: width 0.3s ease;
+    }
+
+    .nav-buttons {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-nav {
+      background: rgba(15, 23, 42, 0.95);
+      border: 1.5px solid var(--border-subtle);
+      color: #FFFFFF;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-nav:hover:not(:disabled) {
+      background: rgba(0, 245, 255, 0.25);
+      border-color: var(--cyan);
+      color: var(--cyan);
+      box-shadow: 0 0 16px rgba(0, 245, 255, 0.35);
+    }
+
+    .btn-nav:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    /* Modal for Speaker Notes */
+    .notes-drawer {
+      position: fixed;
+      bottom: 64px;
+      left: 50%;
+      transform: translateX(-50%) translateY(120%);
+      width: 90%;
+      max-width: 1050px;
+      background: rgba(8, 14, 28, 0.99);
+      border: 2px solid var(--cyan);
+      border-radius: 14px 14px 0 0;
+      padding: 1.5rem 2.0rem;
+      z-index: 100;
+      box-shadow: 0 -12px 50px rgba(0, 0, 0, 0.85);
+      transition: transform 0.3s ease;
+    }
+
+    .notes-drawer.open {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .notes-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.0rem;
+      border-bottom: 1.5px solid var(--border-subtle);
+      padding-bottom: 8px;
+    }
+
+    .notes-title {
+      font-size: 1.05rem;
+      font-family: var(--font-mono);
+      color: var(--cyan);
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .notes-text {
+      font-size: 1.05rem;
+      color: #FFFFFF;
+      line-height: 1.7;
+      max-height: 260px;
+      overflow-y: auto;
+    }
+
+    /* Specific Styles for Slide 7 Sensitivity Studio */
+    .factor-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .mini-meter {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 10px 0;
+    }
+
+    .mini-meter-fill {
+      height: 100%;
+      background: var(--cyan);
+      width: 50%;
+      transition: width 0.15s ease;
+    }
+
+    /* Specific Styles for Slide 8 Material Multiplier */
+    .mat-btn-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .mat-btn {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 10px 14px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .mat-btn.active {
+      background: rgba(0, 245, 255, 0.2);
+      border-color: var(--cyan);
+      box-shadow: 0 0 12px rgba(0, 245, 255, 0.25);
+    }
+
+    .mat-name {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #FFFFFF;
+    }
+
+    .mat-val {
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--cyan);
+      margin-top: 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Particles Background -->
+  <canvas id="ambient-particles"></canvas>
+
+  <!-- Top Navigation Header -->
+  <header>
+    <div class="brand">
+      <span class="badge-beee">BEEE SEMINAR</span>
+      <span class="seminar-title">Magnetising Force (H) Produced by Electric Current</span>
+    </div>
+    <div class="controls-top">
+      <button class="btn-action" onclick="toggleNotes()">
+        <span>🎙️</span> Presenter Script
+      </button>
+      <button class="btn-action" onclick="toggleFullscreen()">
+        <span>⛶</span> Fullscreen
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Slide Viewport -->
+  <main>
+    <div class="slide-viewport">
+
+      <!-- ========================================== -->
+      <!-- SLIDE 1: TITLE SLIDE (Aesthetic & Clean) -->
+      <!-- ========================================== -->
+      <div class="slide-container active" id="slide-1">
+        <div class="col-card" style="align-items: center; justify-content: center; text-align: center; height: 100%; padding: 3.5rem 2.5rem;">
+          <div style="display: flex; gap: 12px; margin-bottom: 1.5rem;">
+            <span class="badge-beee">BEEE SEMINAR PRESENTATION</span>
+            <span class="badge-beee" style="border-color: var(--amber); color: var(--amber); box-shadow: 0 0 12px rgba(251, 191, 36, 0.25);">FIRST-YEAR ENGINEERING</span>
+          </div>
+          
+          <h1 style="font-size: 3.4rem; font-weight: 800; line-height: 1.15; max-width: 1080px; margin-bottom: 1.5rem; background: linear-gradient(135deg, #FFFFFF 40%, #38BDF8 75%, #00F5FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            MAGNETISING FORCE (<span style="font-style: italic;">H</span>) PRODUCED BY ELECTRIC CURRENT
+          </h1>
+          
+          <p style="font-size: 1.35rem; color: #FFFFFF; max-width: 880px; margin-bottom: 2.5rem; line-height: 1.6;">
+            A rigorous technical exploration of electromagnetism, magnetomotive potential, flux density coupling, and rotational air gap clearance in electrical machinery.
+          </p>
+
+          <div style="display: flex; gap: 18px; flex-wrap: wrap; justify-content: center;">
+            <div style="background: rgba(13, 22, 42, 0.9); border: 1.5px solid var(--border-subtle); border-radius: 10px; padding: 12px 24px; text-align: left;">
+              <div style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700; color: var(--cyan); text-transform: uppercase;">Core Derivation</div>
+              <div style="font-size: 1.15rem; font-weight: 800; color: #FFFFFF;">H = NI / l &nbsp;[A/m]</div>
+            </div>
+            <div style="background: rgba(13, 22, 42, 0.9); border: 1.5px solid var(--border-subtle); border-radius: 10px; padding: 12px 24px; text-align: left;">
+              <div style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700; color: var(--amber); text-transform: uppercase;">Constitutive Law</div>
+              <div style="font-size: 1.15rem; font-weight: 800; color: #FFFFFF;">B = &mu;<sub>0</sub> &mu;<sub>r</sub> H &nbsp;[Tesla]</div>
+            </div>
+            <div style="background: rgba(13, 22, 42, 0.9); border: 1.5px solid var(--border-subtle); border-radius: 10px; padding: 12px 24px; text-align: left;">
+              <div style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700; color: var(--green); text-transform: uppercase;">Engineering Scope</div>
+              <div style="font-size: 1.15rem; font-weight: 800; color: #FFFFFF;">6 Solved Numericals &amp; Machines</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- SLIDE 2: ELECTRICITY & MAGNETISM (3D Loop) -->
+      <!-- ========================================== -->
+      <div class="slide-container" id="slide-2">
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">ELECTROMAGNETIC FOUNDATION</div>
+            <div class="slide-title">02. Relationship Between Electricity &amp; Magnetism</div>
+          </div>
+          <div class="slide-counter">02 / 14</div>
+        </div>
+
+        <div class="grid-2col">
+          <!-- Left: Theoretical Principles -->
+          <div class="col-card">
+            <h3 class="card-h3">
+              <span>•</span> 1. Oersted's Landmark Discovery (1820)
+            </h3>
+            <p class="card-p">
+              Hans Christian Oersted proved that electric current flowing through a metallic conductor deflects a compass needle. Moving electric charges directly generate a surrounding magnetic field.
+            </p>
+
+            <h3 class="card-h3">
+              <span>•</span> 2. Right-Hand Grip Rule
+            </h3>
+            <p class="card-p">
+              Grasp the conductor with your right hand such that the <strong style="color: var(--amber);">thumb points in the direction of conventional current (<span class="m-var">I</span>)</strong>. Your curled fingers trace the circular direction of concentric magnetic field lines.
+            </p>
+
+            <!-- Computer Modern LaTeX Formula Card -->
+            <div class="formula-hero" style="margin-top: auto;">
+              <div class="formula-tag">Ampere's Circuital Law</div>
+              <img src="assets/formulas/eq_ampere_law.svg" alt="Ampere's Circuital Law" class="formula-img" style="max-height: 56px;">
+              <div class="formula-sub">Closed line integral of magnetic field equals &mu;<sub>0</sub> times enclosed current</div>
+            </div>
+          </div>
+
+          <!-- Right: Authentic 3D Conductor Canvas -->
+          <div class="col-card" style="padding: 0;">
+            <div class="canvas-wrapper">
+              <canvas id="canvas-s2" style="width: 100%; height: 100%; display: block;"></canvas>
+              <div class="canvas-overlay-ctrls">
+                <div class="slider-group">
+                  <span class="slider-label">Current (<span class="m-var">I</span>):</span>
+                  <input type="range" class="slider-input" min="0.5" max="5.0" step="0.5" value="3.0" id="rng-wire-curr" oninput="updateConductorSim(this.value)">
+                  <span class="val-badge" id="lbl-curr">3.0 A</span>
+                </div>
+                <button class="btn-action" style="padding: 6px 14px; font-size: 0.85rem;" onclick="reverseCurrent()">
+                  ⇄ Reverse Current
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- SLIDE 3: MAGNETIC FLUX (Phi) + Angle Sim -->
+      <!-- ========================================== -->
+      <div class="slide-container" id="slide-3">
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">QUANTIFYING LINES OF FORCE</div>
+            <div class="slide-title">03. Magnetic Flux (&Phi;) – Definition &amp; Characteristics</div>
+          </div>
+          <div class="slide-counter">03 / 14</div>
+        </div>
+
+        <div class="grid-2col">
+          <!-- Left: Theory & Units -->
+          <div class="col-card">
+            <h3 class="card-h3">
+              <span>•</span> 1. Definition of Magnetic Flux
+            </h3>
+            <p class="card-p">
+              Magnetic Flux is defined as the total number of magnetic lines of force passing perpendicularly through a given cross-sectional area in a magnetic field.
+            </p>
+
+            <h3 class="card-h3">
+              <span>•</span> 2. Symbol &amp; SI Unit
+            </h3>
+            <ul class="card-list">
+              <li>• <strong>Symbol:</strong> Greek letter <span class="m-var">&Phi;</span> (Phi)</li>
+              <li>• <strong>SI Unit:</strong> <span class="m-gold">Weber (Wb)</span>, named after Wilhelm Weber</li>
+              <li>• <strong>CGS Conversion:</strong> 1 Wb = 10<sup>8</sup> Maxwell (lines of force)</li>
+              <li>• <strong>Base Equivalent:</strong> 1 Wb = 1 Volt &middot; second (V&middot;s)</li>
+            </ul>
+
+            <h3 class="card-h3">
+              <span>•</span> 3. Continuous Closed Loops
+            </h3>
+            <p class="card-p" style="margin-bottom: 0;">
+              Unlike electric field lines that start on positive and terminate on negative charges, magnetic flux lines always form <strong style="color: var(--cyan);">unbroken closed loops</strong> (&nabla;&middot;<span class="m-var">B</span> = 0). Isolated magnetic monopoles do not exist in nature.
+            </p>
+          </div>
+
+          <!-- Right: Computer Modern LaTeX Formula + Interactive Angle Simulator -->
+          <div class="col-card" style="padding: 1.25rem;">
+            <!-- Formula Header -->
+            <div class="formula-hero" style="margin-top: 0; margin-bottom: 1.0rem;">
+              <div class="formula-tag">Surface Integral Definition</div>
+              <img src="assets/formulas/eq_flux_def.svg" alt="Magnetic Flux Equation" class="formula-img" style="max-height: 56px;">
+              <div class="formula-sub">&Phi; = B &middot; A &middot; cos(&theta;) &nbsp;|&nbsp; &theta; is angle between B and surface normal n&#770;</div>
+            </div>
+
+            <!-- Interactive Flux Angle Canvas Simulation -->
+            <div class="canvas-wrapper" style="flex: 1;">
+              <canvas id="canvas-flux-sim" style="width: 100%; height: 100%; display: block;"></canvas>
+              <div class="canvas-overlay-ctrls">
+                <div class="slider-group">
+                  <span class="slider-label">Orientation Angle (&theta;):</span>
+                  <input type="range" class="slider-input" min="0" max="90" step="5" value="0" id="rng-flux-theta" oninput="updateFluxAngleSim(this.value)">
+                  <span class="val-badge" id="lbl-theta">0&deg;</span>
+                </div>
+                <div style="font-family: var(--font-mono); font-size: 0.95rem; font-weight: 800; color: var(--amber);" id="lbl-flux-calc">
+                  &Phi; = 100% (&Phi;<sub>max</sub>)
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- SLIDE 4: MAGNETOMOTIVE FORCE (MMF) -->
+      <!-- ========================================== -->
+      <div class="slide-container" id="slide-4">
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">THE DRIVING MAGNETIC POTENTIAL</div>
+            <div class="slide-title">04. Magnetomotive Force (MMF) – The Magnetic Driver</div>
+          </div>
+          <div class="slide-counter">04 / 14</div>
+        </div>
+
+        <div class="grid-2col">
+          <!-- Left: MMF Definition & Law -->
+          <div class="col-card">
+            <h3 class="card-h3">
+              <span>•</span> 1. Physical Concept of MMF
+            </h3>
+            <p class="card-p">
+              Magnetomotive Force (MMF) is the magnetic driving pressure that establishes and maintains magnetic flux through a magnetic circuit, directly analogous to Electromotive Force (EMF) driving electric current.
+            </p>
+
+            <!-- Computer Modern Formula Card -->
+            <div class="formula-hero">
+              <div class="formula-tag">Fundamental Formulation</div>
+              <img src="assets/formulas/eq_mmf.svg" alt="MMF Formula" class="formula-img" style="max-height: 56px;">
+              <div class="formula-sub">MMF = N &times; I &nbsp;[Ampere-Turns, AT or Amperes, A]</div>
+            </div>
+
+            <ul class="card-list" style="margin: 0.75rem 0;">
+              <li>• <span class="m-var">N</span>: Number of coil turns (dimensionless integer)</li>
+              <li>• <span class="m-var">I</span>: Current flowing through each conductor (Amperes, A)</li>
+            </ul>
+
+            <div style="background: rgba(251, 191, 36, 0.12); border-left: 4px solid var(--amber); padding: 12px 18px; border-radius: 0 10px 10px 0; margin-top: auto;">
+              <div style="font-family: var(--font-mono); font-size: 0.88rem; font-weight: 800; color: var(--amber);">EQUIVALENCE PRINCIPLE:</div>
+              <div style="font-size: 1.05rem; color: #FFFFFF; margin-top: 4px; line-height: 1.5;">
+                A single turn carrying <strong style="color: var(--amber);">500 A</strong> produces the <em>exact same</em> driving potential (<strong style="color: var(--amber);">500 AT</strong>) as a 500-turn coil carrying <strong style="color: var(--amber);">1 A</strong>!
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Interactive 3D Solenoid Simulator -->
+          <div class="col-card" style="padding: 0;">
+            <div class="canvas-wrapper">
+              <canvas id="canvas-mmf" style="width: 100%; height: 100%; display: block;"></canvas>
+              <div class="canvas-overlay-ctrls">
+                <div class="slider-group">
+                  <span class="slider-label">Turns (<span class="m-var">N</span>):</span>
+                  <input type="range" class="slider-input" min="10" max="60" step="5" value="25" id="rng-mmf-n" oninput="updateMMFSim()">
+                  <span class="val-badge" id="lbl-mmf-n">25 turns</span>
+                </div>
+                <div class="slider-group">
+                  <span class="slider-label">Current (<span class="m-var">I</span>):</span>
+                  <input type="range" class="slider-input" min="1.0" max="8.0" step="0.5" value="4.0" id="rng-mmf-i" oninput="updateMMFSim()">
+                  <span class="val-badge" id="lbl-mmf-i">4.0 A</span>
+                </div>
+                <div style="font-family: var(--font-mono); font-size: 0.95rem; font-weight: 800; color: var(--cyan); white-space: nowrap;" id="lbl-mmf-total">
+                  MMF = 100 AT
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- SLIDE 5: EMF VS MMF COMPARATIVE DUALITY -->
+      <!-- ========================================== -->
+      <div class="slide-container" id="slide-5">
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">HOPKINSON CIRCUIT DUALITY</div>
+            <div class="slide-title">05. Comparative Duality: EMF vs. MMF</div>
+          </div>
+          <div class="slide-counter">05 / 14</div>
+        </div>
+
+        <div class="col-card" style="flex: 1; padding: 1.75rem 2.0rem;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 1.12rem; height: 100%;">
+            <thead>
+              <tr style="border-bottom: 2px solid var(--border-subtle); text-align: left;">
+                <th style="padding: 12px 16px; font-family: var(--font-mono); font-size: 0.92rem; font-weight: 800; color: var(--amber); text-transform: uppercase;">PARAMETER</th>
+                <th style="padding: 12px 16px; font-family: var(--font-mono); font-size: 0.92rem; font-weight: 800; color: var(--cyan); text-transform: uppercase;">ELECTRIC CIRCUIT (EMF)</th>
+                <th style="padding: 12px 16px; font-family: var(--font-mono); font-size: 0.92rem; font-weight: 800; color: var(--cyan-bright); text-transform: uppercase;">MAGNETIC CIRCUIT (MMF)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1.5px solid rgba(255, 255, 255, 0.08);">
+                <td style="padding: 16px; font-weight: 800; color: #FFFFFF;">1. Driving Potential</td>
+                <td style="padding: 16px; color: #FFFFFF;">
+                  <strong style="color: var(--cyan);">Electromotive Force (EMF)</strong><br>
+                  Symbol: <span class="m-var">V</span> or <span class="m-var">E</span> &nbsp;|&nbsp; Unit: <strong>Volts (V)</strong>
+                </td>
+                <td style="padding: 16px; color: #FFFFFF;">
+                  <strong style="color: var(--amber);">Magnetomotive Force (MMF)</strong><br>
+                  Symbol: <span class="m-var">F</span> &nbsp;|&nbsp; Unit: <strong>Ampere-Turns (AT)</strong>
+                </td>
+              </tr>
+              <tr style="border-bottom: 1.5px solid rgba(255, 255, 255, 0.08);">
+                <td style="padding: 16px; font-weight: 800; color: #FFFFFF;">2. Flow / Effect</td>
+                <td style="padding: 16px; color: #FFFFFF;">
+                  <strong style="color: var(--cyan);">Electric Current (<span class="m-var">I</span>)</strong><br>
+                  Actual physical drift of charge carriers (<span class="m-var">dq/dt</span>) in <strong>Amperes (A)</strong>
+                </td>
+                <td style="padding: 16px; color: #FFFFFF;">
+                  <strong style="color: var(--amber);">Magnetic Flux (<span class="m-var">&Phi;</span>)</strong><br>
+                  Established magnetic field lines through space/medium in <strong>Webers (Wb)</strong>
+                </td>
+              </tr>
+              <tr style="border-bottom: 1.5px solid rgba(255, 255, 255, 0.08);">
+                <td style="padding: 16px; font-weight: 800; color: #FFFFFF;">3. Material Property</td>
+                <td style="padding: 16px; color: #FFFFFF;">
+                  <strong style="color: var(--cyan);">Conductivity (<span class="m-var">&sigma;</span>)</strong><br>
+                  Ability of material to conduct electric charges (<span class="m-var">&sigma; = 1/&rho;</span>)
+                </td>
+                <td style="padding: 16px; color: #FFFFFF;">
+                  <strong style="color: var(--amber);">Permeability (<span class="m-var">&mu;</span>)</strong><br>
+                  Ability of medium to support magnetic flux (<span class="m-var">&mu; = &mu;<sub>0</sub>&mu;<sub>r</sub></span>)
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 16px; font-weight: 800; color: #FFFFFF;">4. Energy Nature</td>
+                <td style="padding: 16px; color: #FFFFFF;">
+                  <strong style="color: var(--red);">Continuous Energy Dissipation</strong><br>
+                  Continuous power is expended as Joule heating (<span class="m-var">I<sup>2</sup>R</span>) to maintain current.
+                </td>
+                <td style="padding: 16px; color: #FFFFFF;">
+                  <strong style="color: var(--green);">Stored Potential Energy</strong><br>
+                  Zero energy needed to maintain steady flux once established (<span class="m-var">W = &frac12; L I<sup>2</sup></span>).
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- SLIDE 6: MAGNETISING FORCE (H) DERIVATION -->
+      <!-- ========================================== -->
+      <div class="slide-container" id="slide-6">
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">CENTERPIECE ACADEMIC DERIVATION</div>
+            <div class="slide-title">06. Magnetising Force (H) – Definition &amp; Derivation</div>
+          </div>
+          <div class="slide-counter">06 / 14</div>
+        </div>
+
+        <div class="col-card" style="flex: 1; padding: 1.5rem 2.0rem;">
+          <!-- Formal Definition -->
+          <div style="background: rgba(0, 245, 255, 0.1); border-left: 5px solid var(--cyan); padding: 12px 20px; border-radius: 0 10px 10px 0; margin-bottom: 1.0rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.88rem; font-weight: 800; color: var(--cyan); text-transform: uppercase;">Formal Academic Definition:</div>
+            <div style="font-size: 1.35rem; font-weight: 700; color: #FFFFFF; margin-top: 4px; line-height: 1.4;">
+              "Magnetising Force (<span class="m-var">H</span>) is defined as the Magnetomotive Force (MMF) per unit length of a magnetic circuit."
+            </div>
+          </div>
+
+          <!-- Computer Modern Derivation Banner -->
+          <div class="formula-hero" style="margin: 0.8rem 0;">
+            <div class="formula-tag">Mathematical Step-by-Step Derivation</div>
+            <img src="assets/formulas/eq_h_derivation.svg" alt="Magnetising Force Derivation" class="formula-img" style="max-height: 62px;">
+            <div class="formula-sub">SI Units: Ampere-Turns per metre [AT/m] or Amperes per metre [A/m]</div>
+          </div>
+
+          <!-- 3-Column Breakdown -->
+          <div class="grid-3col" style="margin-top: 1.0rem; flex: 1;">
+            <!-- Column 1: Variable Table -->
+            <div style="background: rgba(13, 22, 42, 0.8); border: 1.5px solid var(--border-subtle); border-radius: 10px; padding: 12px 18px;">
+              <div style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--cyan); font-weight: 800; margin-bottom: 8px;">VARIABLE BREAKDOWN</div>
+              <ul style="list-style: none; font-size: 0.98rem; color: #FFFFFF; line-height: 1.7;">
+                <li>• <span class="m-var">H</span>: Magnetising force (A/m)</li>
+                <li>• <span class="m-var">N</span>: Total coil turns</li>
+                <li>• <span class="m-var">I</span>: Excitation current (A)</li>
+                <li>• <span class="m-var">l</span>: Mean magnetic path length (m)</li>
+              </ul>
+            </div>
+
+            <!-- Column 2: Alternative Terminology -->
+            <div style="background: rgba(13, 22, 42, 0.8); border: 1.5px solid var(--border-subtle); border-radius: 10px; padding: 12px 18px;">
+              <div style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--amber); font-weight: 800; margin-bottom: 8px;">ALTERNATIVE TERMINOLOGY</div>
+              <ol style="font-size: 0.98rem; color: #FFFFFF; line-height: 1.7; padding-left: 20px;">
+                <li>Magnetic Field Strength</li>
+                <li>Magnetic Field Intensity</li>
+                <li>Magnetic Potential Gradient (<span class="m-var">-dF/dl</span>)</li>
+              </ol>
+            </div>
+
+            <!-- Column 3: Electrical Duality Callout -->
+            <div style="background: rgba(13, 22, 42, 0.8); border: 1.5px solid var(--border-subtle); border-radius: 10px; padding: 12px 18px; text-align: center;">
+              <div style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--green); font-weight: 800; margin-bottom: 6px;">ELECTRICAL ANALOGY</div>
+              <img src="assets/formulas/eq_e_vs_h.svg" alt="E vs H Analogy" style="max-height: 44px; display: block; margin: 8px auto; filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.45));">
+              <div style="font-size: 0.88rem; color: #E2E8F0; margin-top: 4px;">Electric field intensity (V/m) is dual to magnetic intensity (AT/m).</div>
+            </div>
+          </div>
+
+          <!-- Core Insight Banner -->
+          <div style="background: rgba(0, 245, 255, 0.1); border: 1.5px solid var(--cyan); border-radius: 10px; padding: 10px 18px; margin-top: 1.0rem; text-align: center;">
+            <span style="font-family: var(--font-mono); font-size: 0.92rem; font-weight: 800; color: var(--cyan);">CORE ENGINEERING PRINCIPLE:</span>
+            <span style="font-size: 1.05rem; color: #FFFFFF; margin-left: 8px;">
+              <strong>H is completely INDEPENDENT of core material!</strong> Whether the core is iron, air, copper, or vacuum, for fixed <span class="m-var">N</span>, <span class="m-var">I</span>, and <span class="m-var">l</span>, <span class="m-var">H</span> is strictly identical.
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- SLIDE 7: FACTORS AFFECTING H (Studio) -->
+      <!-- ========================================== -->
+      <div class="slide-container" id="slide-7">
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">PARAMETRIC SENSITIVITY STUDIO</div>
+            <div class="slide-title">07. Factors Affecting Magnetising Force (H)</div>
+          </div>
+          <div class="slide-counter">07 / 14</div>
+        </div>
+
+        <div class="col-card" style="flex: 1; padding: 1.5rem 2.0rem;">
+          <!-- Master Equation Banner -->
+          <div style="text-align: center; margin-bottom: 1.0rem;">
+            <img src="assets/formulas/h_factors.svg" alt="H Proportionalities" style="max-height: 44px; display: inline-block; filter: drop-shadow(0 0 14px rgba(0, 245, 255, 0.6));">
+          </div>
+
+          <!-- 3 Interactive Sensitivity Columns -->
+          <div class="grid-3col" style="flex: 1;">
+            <!-- Column 1: Number of Turns (N) -->
+            <div class="col-card factor-col" style="background: rgba(13, 22, 42, 0.9);">
+              <div>
+                <img src="assets/formulas/eq_factor_n.svg" alt="H proportional to N" style="max-height: 38px; display: block; margin-bottom: 10px;">
+                <p style="font-size: 0.98rem; color: #FFFFFF; line-height: 1.6;">
+                  Every additional turn encircles the core, adding an independent ampere-turn loop that contributes constructively to total MMF.
+                </p>
+              </div>
+
+              <div style="margin-top: 1.25rem;">
+                <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.92rem;">
+                  <span style="color: var(--cyan); font-weight: 700;">Turns (N):</span>
+                  <span id="lbl-s7-n" style="font-weight: 800; color: #FFFFFF;">300 turns</span>
+                </div>
+                <input type="range" class="slider-input" min="100" max="800" step="50" value="300" id="rng-s7-n" oninput="updateHFactorsSim()" style="width: 100%; margin: 8px 0;">
+                <div class="mini-meter"><div class="mini-meter-fill" id="meter-n" style="width: 37.5%;"></div></div>
+                <div style="font-size: 0.85rem; color: #CBD5E1;">Doubling N doubles H immediately.</div>
+              </div>
+            </div>
+
+            <!-- Column 2: Excitation Current (I) -->
+            <div class="col-card factor-col" style="background: rgba(13, 22, 42, 0.9);">
+              <div>
+                <img src="assets/formulas/eq_factor_i.svg" alt="H proportional to I" style="max-height: 38px; display: block; margin-bottom: 10px;">
+                <p style="font-size: 0.98rem; color: #FFFFFF; line-height: 1.6;">
+                  Current represents physical charge transport rate (<span class="m-var">dq/dt</span>). Greater electron drift strengthens circular Amperean field intensity linearly.
+                </p>
+              </div>
+
+              <div style="margin-top: 1.25rem;">
+                <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.92rem;">
+                  <span style="color: var(--cyan); font-weight: 700;">Current (I):</span>
+                  <span id="lbl-s7-i" style="font-weight: 800; color: #FFFFFF;">2.5 A</span>
+                </div>
+                <input type="range" class="slider-input" min="0.5" max="6.0" step="0.5" value="2.5" id="rng-s7-i" oninput="updateHFactorsSim()" style="width: 100%; margin: 8px 0;">
+                <div class="mini-meter"><div class="mini-meter-fill" id="meter-i" style="width: 41.6%;"></div></div>
+                <div style="font-size: 0.85rem; color: #CBD5E1;">Limited in practice by I<sup>2</sup>R thermal limits.</div>
+              </div>
+            </div>
+
+            <!-- Column 3: Magnetic Path Length (l) -->
+            <div class="col-card factor-col" style="background: rgba(13, 22, 42, 0.9);">
+              <div>
+                <img src="assets/formulas/eq_factor_l.svg" alt="H inversely proportional to l" style="max-height: 38px; display: block; margin-bottom: 10px;">
+                <p style="font-size: 0.98rem; color: #FFFFFF; line-height: 1.6;">
+                  The total MMF is distributed over the complete path length. A larger perimeter stretches the MMF across greater distance, diluting local intensity.
+                </p>
+              </div>
+
+              <div style="margin-top: 1.25rem;">
+                <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.92rem;">
+                  <span style="color: var(--amber); font-weight: 700;">Path Length (l):</span>
+                  <span id="lbl-s7-l" style="font-weight: 800; color: #FFFFFF;">0.50 m</span>
+                </div>
+                <input type="range" class="slider-input" min="0.2" max="1.2" step="0.05" value="0.50" id="rng-s7-l" oninput="updateHFactorsSim()" style="width: 100%; margin: 8px 0;">
+                <div class="mini-meter"><div class="mini-meter-fill" id="meter-l" style="width: 30%; background: var(--amber);"></div></div>
+                <div style="font-size: 0.85rem; color: #CBD5E1;">Engineers minimize core perimeter to maximize H.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Live Master Calculation Bar -->
+          <div style="background: rgba(4, 9, 20, 0.98); border: 2px solid var(--cyan); border-radius: 10px; padding: 12px 24px; margin-top: 1.0rem; display: flex; align-items: center; justify-content: space-between;">
+            <div style="font-family: var(--font-mono); font-size: 1.05rem; color: #E2E8F0;">
+              LIVE DYNAMIC CALCULATION: &nbsp;
+              <strong style="color: #FFFFFF;">H = (N &times; I) / l = (<span id="calc-s7-n">300</span> &times; <span id="calc-s7-i">2.5</span>) / <span id="calc-s7-l">0.50</span></strong>
+            </div>
+            <div style="font-family: var(--font-mono); font-size: 1.45rem; font-weight: 800; color: var(--cyan);" id="lbl-s7-h-result">
+              H = 1500 A/m
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- SLIDE 8: FLUX DENSITY (B) & CONSTITUTIVE -->
+      <!-- ========================================== -->
+      <div class="slide-container" id="slide-8">
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">CONSTITUTIVE RELATION &amp; CORE CONCEPTS</div>
+            <div class="slide-title">08. Magnetic Flux Density (B) &amp; Its Relationship with H</div>
+          </div>
+          <div class="slide-counter">08 / 14</div>
+        </div>
+
+        <div class="grid-2col">
+          <!-- Left: Flux Density (B) -->
+          <div class="col-card">
+            <h3 class="card-h3">
+              <span>•</span> 1. Magnetic Flux Density (<span class="m-var">B</span>)
+            </h3>
+            <p class="card-p" style="margin-bottom: 0.6rem;">
+              Magnetic Flux Density (<span class="m-var">B</span>) measures the concentration of magnetic flux passing perpendicularly through a unit cross-sectional area:
+            </p>
+
+            <div class="formula-hero" style="margin: 0.5rem 0;">
+              <img src="assets/formulas/eq_b_def.svg" alt="B = Phi / A" class="formula-img" style="max-height: 50px;">
+              <div class="formula-sub">1 Tesla = 1 Weber per square metre [Wb/m&sup2;]</div>
+            </div>
+
+            <!-- Cause vs Effect Callout -->
+            <div style="background: rgba(13, 22, 42, 0.85); border: 1.5px solid var(--border-subtle); border-radius: 10px; padding: 12px 18px; margin: 0.8rem 0;">
+              <div style="font-family: var(--font-mono); font-size: 0.88rem; color: var(--amber); font-weight: 800; margin-bottom: 6px;">CAUSE VS. EFFECT DISTINCTION:</div>
+              <div style="font-size: 1.02rem; color: #FFFFFF; line-height: 1.6;">
+                • <strong style="color: var(--cyan);">H (Cause):</strong> The magnetising effort established by electric current in the coil.<br>
+                • <strong style="color: var(--green);">B (Effect):</strong> The resulting magnetic flux density produced inside the physical material.
+              </div>
+            </div>
+
+            <div class="formula-hero" style="margin-top: auto; padding: 0.8rem 1.25rem;">
+              <div class="formula-tag">Permeability of Free Space (&mu;<sub>0</sub>)</div>
+              <img src="assets/formulas/eq_mu0.svg" alt="mu0 value" class="formula-img" style="max-height: 42px;">
+            </div>
+          </div>
+
+          <!-- Right: Constitutive Equation & Live Material Permeability Multiplier -->
+          <div class="col-card">
+            <h3 class="card-h3">
+              <span>•</span> 2. Constitutive Equation (<span class="m-var">B = &mu;H</span>)
+            </h3>
+            
+            <div class="formula-hero" style="margin: 0.5rem 0;">
+              <img src="assets/formulas/eq_constitutive.svg" alt="Constitutive Law" class="formula-img" style="max-height: 52px;">
+            </div>
+
+            <div class="formula-hero" style="margin: 0.5rem 0; padding: 0.6rem 1.25rem;">
+              <img src="assets/formulas/eq_vacuum_rel.svg" alt="Vacuum Law" class="formula-img" style="max-height: 46px;">
+            </div>
+
+            <!-- Interactive Core Permeability Matrix -->
+            <div style="margin-top: 0.8rem;">
+              <div style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--amber); font-weight: 800; text-transform: uppercase;">
+                SELECT MEDIUM TO COMPARE FLUX DENSITY (AT H = 1000 A/m):
+              </div>
+              <div class="mat-btn-grid">
+                <button class="mat-btn active" id="btn-mat-air" onclick="setMaterialPerm(1, 'Air / Vacuum', this)">
+                  <div class="mat-name">Air / Vacuum</div>
+                  <div class="mat-val">&mu;<sub>r</sub> = 1</div>
+                </button>
+                <button class="mat-btn" id="btn-mat-steel" onclick="setMaterialPerm(1000, 'Cast Steel', this)">
+                  <div class="mat-name">Cast Steel</div>
+                  <div class="mat-val">&mu;<sub>r</sub> = 1,000</div>
+                </button>
+                <button class="mat-btn" id="btn-mat-silicon" onclick="setMaterialPerm(5000, 'Silicon Steel', this)">
+                  <div class="mat-name">Silicon Steel</div>
+                  <div class="mat-val">&mu;<sub>r</sub> = 5,000</div>
+                </button>
+                <button class="mat-btn" id="btn-mat-super" onclick="setMaterialPerm(50000, 'Supermalloy', this)">
+                  <div class="mat-name">Supermalloy</div>
+                  <div class="mat-val">&mu;<sub>r</sub> = 50,000</div>
+                </button>
+              </div>
+
+              <!-- Live Comparison Readout -->
+              <div style="background: rgba(4, 9, 20, 0.98); border: 1.5px solid var(--border-subtle); border-radius: 10px; padding: 10px 18px; margin-top: 10px; text-align: center;">
+                <div style="font-family: var(--font-mono); font-size: 0.92rem; color: #E2E8F0;" id="lbl-mat-desc">
+                  In Air / Vacuum: B = &mu;<sub>0</sub>H = 1.257 &times; 10<sup>-3</sup> T (1.257 mT)
+                </div>
+                <div style="font-family: var(--font-mono); font-size: 1.15rem; font-weight: 800; color: var(--cyan); margin-top: 4px;" id="lbl-mat-b">
+                  Resulting Flux Density B = 1.257 mT &nbsp;[1&times; baseline]
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- SLIDE 9: AIR GAP IN ELECTRICAL MACHINES -->
+      <!-- ========================================== -->
+      <div class="slide-container" id="slide-9">
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">ROTATING MACHINE AERODYNAMICS &amp; CLEARANCE</div>
+            <div class="slide-title">09. Air Gap in Electrical Machines – Basic Concepts</div>
+          </div>
+          <div class="slide-counter">09 / 14</div>
+        </div>
+
+        <div class="grid-2col">
+          <!-- Left: Exact Student Handwritten Points -->
+          <div class="col-card">
+            <h3 class="card-h3">
+              <span>•</span> Definition &amp; Necessity
+            </h3>
+            <p class="card-p" style="margin-bottom: 0.75rem;">
+              • <strong>Air gap</strong> is a small space between two magnetic parts.<br>
+              • Air gap is a <strong style="color: var(--amber);">necessity</strong> in rotating machines such as a <strong>motor</strong> or a <strong>generator</strong>.
+            </p>
+
+            <div style="background: rgba(251, 191, 36, 0.12); border-left: 4px solid var(--amber); padding: 14px 18px; border-radius: 0 10px 10px 0; margin-bottom: 1.0rem;">
+              <div style="font-family: var(--font-mono); font-size: 0.92rem; font-weight: 800; color: var(--amber); text-transform: uppercase;">WHY AIR GAP?</div>
+              <div style="font-size: 1.05rem; color: #FFFFFF; margin-top: 6px; line-height: 1.65;">
+                <strong>1. Provides Mechanical Clearance:</strong><br>
+                Separates fixed parts (stator field poles) and moving parts (rotating armature) to prevent physical friction, rubbing, and catastrophic mechanical damage during high-speed rotation.<br><br>
+                <strong>2. Prevents Saturation in Magnetic Device:</strong><br>
+                Air has constant permeability (&mu;<sub>r</sub> = 1) and never saturates. It introduces controlled reluctance, preventing the ferromagnetic core from saturating too early at normal operating currents.
+              </div>
+            </div>
+
+            <div style="font-size: 0.92rem; color: #CBD5E1; margin-top: auto;">
+              <em>*Note: A subsequent seminar team will present the in-depth advanced design analysis of air gaps.</em>
+            </div>
+          </div>
+
+          <!-- Right: Dual-View (Figure 4 Diagram & Live Clearance Simulator) -->
+          <div class="col-card" style="padding: 1.25rem;">
+            <div class="tab-bar">
+              <button class="tab-btn active" id="btn-tab-fig4" onclick="switchAirGapTab('fig4')">
+                🖼️ Machine Cross-Section (Figure 4)
+              </button>
+              <button class="tab-btn" id="btn-tab-sim" onclick="switchAirGapTab('sim')">
+                ⚙️ Live Clearance Simulation
+              </button>
+            </div>
+
+            <!-- Tab 1: Figure 4 Image View -->
+            <div id="view-airgap-fig4" style="flex: 1; display: flex; align-items: center; justify-content: center; background: #02040A; border: 1.5px solid var(--border-subtle); border-radius: 10px; overflow: hidden; padding: 12px;">
+              <img src="assets/dc_machine_airgap.png" alt="DC Machine Cross-Section Figure 4" style="max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 8px;">
+            </div>
+
+            <!-- Tab 2: Live Rotating Rotor Clearance Simulator -->
+            <div id="view-airgap-sim" style="flex: 1; display: none; position: relative;">
+              <div class="canvas-wrapper">
+                <canvas id="canvas-airgap-edu" style="width: 100%; height: 100%; display: block;"></canvas>
+                <div class="canvas-overlay-ctrls">
+                  <div class="slider-group">
+                    <span class="slider-label">Air Gap Clearance (&delta;):</span>
+                    <input type="range" class="slider-input" min="0.5" max="4.0" step="0.5" value="1.5" id="rng-airgap-width" oninput="updateAirGapSim(this.value)">
+                    <span class="val-badge" id="lbl-airgap-w">1.5 mm</span>
+                  </div>
+                  <div style="font-family: var(--font-mono); font-size: 0.92rem; font-weight: 700; color: var(--green);" id="lbl-airgap-status">
+                    ✓ Clearance Safe
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- SLIDE 10: ENGINEERING APPLICATIONS -->
+      <!-- ========================================== -->
+      <div class="slide-container" id="slide-10">
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">INDUSTRIAL ELECTROMAGNETIC SYSTEMS</div>
+            <div class="slide-title">10. Real-World Applications of Magnetising Force</div>
+          </div>
+          <div class="slide-counter">10 / 14</div>
+        </div>
+
+        <div class="grid-3col" style="margin-bottom: 1.25rem; flex: 1;">
+          <div class="col-card">
+            <div style="font-size: 1.8rem; margin-bottom: 8px;">⚡</div>
+            <div style="font-family: var(--font-mono); font-size: 0.95rem; font-weight: 800; color: var(--cyan);">1. ELECTRIC MOTORS</div>
+            <p style="font-size: 1.02rem; color: #FFFFFF; margin-top: 8px; line-height: 1.6;">
+              Field windings produce intense <span class="m-var">H</span> to establish working magnetic flux across the air gap. Rotor conductors interact with this flux to produce electromagnetic torque (<span class="m-var">T = k &Phi; I<sub>a</sub></span>).
+            </p>
+          </div>
+
+          <div class="col-card">
+            <div style="font-size: 1.8rem; margin-bottom: 8px;">🔄</div>
+            <div style="font-family: var(--font-mono); font-size: 0.95rem; font-weight: 800; color: var(--cyan);">2. POWER GENERATORS</div>
+            <p style="font-size: 1.02rem; color: #FFFFFF; margin-top: 8px; line-height: 1.6;">
+              DC excitation current driven through rotor poles creates rotating magnetising force. By Faraday's Law, rotating flux lines cut stator coils to induce utility-scale AC EMF.
+            </p>
+          </div>
+
+          <div class="col-card">
+            <div style="font-size: 1.8rem; margin-bottom: 8px;">🏢</div>
+            <div style="font-family: var(--font-mono); font-size: 0.95rem; font-weight: 800; color: var(--cyan);">3. POWER TRANSFORMERS</div>
+            <p style="font-size: 1.02rem; color: #FFFFFF; margin-top: 8px; line-height: 1.6;">
+              AC magnetising current creates alternating <span class="m-var">H</span> that forces mutual magnetic flux through high-permeability silicon steel laminated cores without moving parts.
+            </p>
+          </div>
+        </div>
+
+        <div class="grid-2col" style="height: 42%;">
+          <div class="col-card">
+            <div style="font-family: var(--font-mono); font-size: 0.95rem; font-weight: 800; color: var(--amber);">4. INDUSTRIAL ELECTROMAGNETS</div>
+            <p style="font-size: 1.02rem; color: #FFFFFF; margin-top: 8px; line-height: 1.6;">
+              Scrap metal cranes and magnetic levitation (Maglev) trains utilize thousands of ampere-turns (<span class="m-var">NI</span>) over compact path lengths to generate tremendous lifting forces (<span class="m-var">F = B<sup>2</sup>A / 2&mu;<sub>0</sub></span>).
+            </p>
+          </div>
+
+          <div class="col-card">
+            <div style="font-family: var(--font-mono); font-size: 0.95rem; font-weight: 800; color: var(--amber);">5. ELECTROMAGNETIC RELAYS &amp; SOLENOIDS</div>
+            <p style="font-size: 1.02rem; color: #FFFFFF; margin-top: 8px; line-height: 1.6;">
+              Protective switchgear, circuit breakers, and automotive fuel injectors employ solenoid coils where magnetising force pulls spring-loaded iron plungers to close or open circuits in milliseconds.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- SLIDE 11: NUMERICAL PROBLEMS 1 & 2 -->
+      <!-- ========================================== -->
+      <div class="slide-container" id="slide-11">
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">ANALYTICAL FOUNDATIONS</div>
+            <div class="slide-title">11. Numerical Exercises: Problems 1 &amp; 2</div>
+          </div>
+          <div class="slide-counter">11 / 14</div>
+        </div>
+
+        <div class="grid-2col">
+          <!-- Problem 1: MMF Calculation -->
+          <div class="col-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
+              <span class="badge-beee">EXERCISE 1: MMF</span>
+              <span style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700; color: var(--cyan);">DIRECT COUPLING</span>
+            </div>
+            
+            <p style="font-size: 1.1rem; color: #FFFFFF; margin-bottom: 0.8rem; line-height: 1.6;">
+              <strong>Problem Statement:</strong> A coil has <strong>200 turns</strong> and carries a direct current of <strong>3 A</strong>. Calculate the resulting magnetomotive force (MMF).
+            </p>
+
+            <div style="background: rgba(13, 22, 42, 0.8); border: 1.5px solid var(--border-subtle); border-radius: 8px; padding: 8px 14px; margin-bottom: 0.8rem; font-size: 1.02rem; color: var(--cyan); font-weight: 700;">
+              Given Data: N = 200 turns, I = 3 A
+            </div>
+
+            <div class="formula-hero" style="margin: 0.5rem 0;">
+              <img src="assets/formulas/eq_prob1.svg" alt="Problem 1 Solution" class="formula-img" style="max-height: 48px;">
+            </div>
+
+            <div style="background: rgba(0, 245, 255, 0.12); border: 2px solid var(--cyan); border-radius: 8px; padding: 10px 16px; margin-top: auto; text-align: center;">
+              <span style="font-family: var(--font-mono); font-size: 1.12rem; font-weight: 800; color: var(--cyan);">
+                FINAL ANSWER: MMF = 600 AT (Ampere-Turns)
+              </span>
+            </div>
+          </div>
+
+          <!-- Problem 2: Magnetising Force H -->
+          <div class="col-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
+              <span class="badge-beee">EXERCISE 2: MAGNETISING FORCE</span>
+              <span style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700; color: var(--cyan);">SPATIAL GRADIENT</span>
+            </div>
+
+            <p style="font-size: 1.1rem; color: #FFFFFF; margin-bottom: 0.8rem; line-height: 1.6;">
+              <strong>Problem Statement:</strong> A coil has <strong>500 turns</strong>, carries <strong>2 A</strong> current, and has a magnetic path length of <strong>0.5 m</strong>. Calculate the magnetising force (<span class="m-var">H</span>).
+            </p>
+
+            <div style="background: rgba(13, 22, 42, 0.8); border: 1.5px solid var(--border-subtle); border-radius: 8px; padding: 8px 14px; margin-bottom: 0.8rem; font-size: 1.02rem; color: var(--cyan); font-weight: 700;">
+              Given Data: N = 500, I = 2 A, l = 0.5 m
+            </div>
+
+            <div class="formula-hero" style="margin: 0.5rem 0;">
+              <img src="assets/formulas/eq_prob2.svg" alt="Problem 2 Solution" class="formula-img" style="max-height: 48px;">
+            </div>
+
+            <div style="background: rgba(0, 245, 255, 0.12); border: 2px solid var(--cyan); border-radius: 8px; padding: 10px 16px; margin-top: auto; text-align: center;">
+              <span style="font-family: var(--font-mono); font-size: 1.12rem; font-weight: 800; color: var(--cyan);">
+                FINAL ANSWER: H = 2000 A/m (or AT/m)
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- SLIDE 12: NUMERICAL PROBLEMS 3 & 4 -->
+      <!-- ========================================== -->
+      <div class="slide-container" id="slide-12">
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">TOROIDAL &amp; FLUX DENSITY ANALYSIS</div>
+            <div class="slide-title">12. Numerical Exercises: Problems 3 &amp; 4</div>
+          </div>
+          <div class="slide-counter">12 / 14</div>
+        </div>
+
+        <div class="grid-2col">
+          <!-- Problem 3: Toroid Turns -->
+          <div class="col-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
+              <span class="badge-beee">EXERCISE 3: TURN SYNTHESIS</span>
+              <span style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700; color: var(--amber);">INVERSE SIZING</span>
+            </div>
+
+            <p style="font-size: 1.1rem; color: #FFFFFF; margin-bottom: 0.8rem; line-height: 1.6;">
+              <strong>Problem Statement:</strong> A toroidal coil has a path length of <strong>0.4 m</strong>, magnetising force of <strong>800 A/m</strong>, and current of <strong>0.5 A</strong>. Find the required number of coil turns (<span class="m-var">N</span>).
+            </p>
+
+            <div style="background: rgba(13, 22, 42, 0.8); border: 1.5px solid var(--border-subtle); border-radius: 8px; padding: 8px 14px; margin-bottom: 0.8rem; font-size: 1.02rem; color: var(--amber); font-weight: 700;">
+              Given Data: l = 0.4 m, H = 800 A/m, I = 0.5 A
+            </div>
+
+            <div class="formula-hero" style="margin: 0.5rem 0;">
+              <img src="assets/formulas/eq_prob3.svg" alt="Problem 3 Solution" class="formula-img" style="max-height: 48px;">
+            </div>
+
+            <div style="background: rgba(251, 191, 36, 0.12); border: 2px solid var(--amber); border-radius: 8px; padding: 10px 16px; margin-top: auto; text-align: center;">
+              <span style="font-family: var(--font-mono); font-size: 1.12rem; font-weight: 800; color: var(--amber);">
+                FINAL ANSWER: N = 640 turns
+              </span>
+            </div>
+          </div>
+
+          <!-- Problem 4: Flux Density -->
+          <div class="col-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
+              <span class="badge-beee">EXERCISE 4: FLUX DENSITY</span>
+              <span style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700; color: var(--cyan);">AREA DENSITY</span>
+            </div>
+
+            <p style="font-size: 1.1rem; color: #FFFFFF; margin-bottom: 0.8rem; line-height: 1.6;">
+              <strong>Problem Statement:</strong> A magnetic flux of <strong>250 &mu;Wb</strong> passes perpendicularly through a core cross-sectional area of <strong>50 cm&sup2;</strong>. Calculate the flux density (<span class="m-var">B</span>).
+            </p>
+
+            <div style="background: rgba(13, 22, 42, 0.8); border: 1.5px solid var(--border-subtle); border-radius: 8px; padding: 8px 14px; margin-bottom: 0.8rem; font-size: 1.02rem; color: var(--cyan); font-weight: 700;">
+              Given Data: &Phi; = 250 &times; 10<sup>-6</sup> Wb, A = 50 &times; 10<sup>-4</sup> m&sup2;
+            </div>
+
+            <div class="formula-hero" style="margin: 0.5rem 0;">
+              <img src="assets/formulas/eq_prob4.svg" alt="Problem 4 Solution" class="formula-img" style="max-height: 48px;">
+            </div>
+
+            <div style="background: rgba(0, 245, 255, 0.12); border: 2px solid var(--cyan); border-radius: 8px; padding: 10px 16px; margin-top: auto; text-align: center;">
+              <span style="font-family: var(--font-mono); font-size: 1.12rem; font-weight: 800; color: var(--cyan);">
+                FINAL ANSWER: B = 0.05 Tesla (T) or Wb/m&sup2;
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- SLIDE 13: NUMERICAL PROBLEMS 5 & 6 -->
+      <!-- ========================================== -->
+      <div class="slide-container" id="slide-13">
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">TOPIC-ALIGNED ADVANCED PROBLEMS</div>
+            <div class="slide-title">13. Numerical Exercises: Problems 5 &amp; 6</div>
+          </div>
+          <div class="slide-counter">13 / 14</div>
+        </div>
+
+        <div class="grid-2col">
+          <!-- Problem 5: Topic-Based MMF & Current Calculation -->
+          <div class="col-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
+              <span class="badge-beee">EXERCISE 5: MMF &amp; CURRENT</span>
+              <span style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700; color: var(--cyan);">TOPIC APPLICATION</span>
+            </div>
+
+            <p style="font-size: 1.1rem; color: #FFFFFF; margin-bottom: 0.8rem; line-height: 1.6;">
+              <strong>Problem Statement:</strong> A magnetic core has a mean length of <strong>0.8 m</strong> and is wound with <strong>600 turns</strong>. If the required magnetising force (<span class="m-var">H</span>) is <strong>1500 A/m</strong>, determine: (a) Total MMF, (b) Excitation current (<span class="m-var">I</span>).
+            </p>
+
+            <div style="background: rgba(13, 22, 42, 0.8); border: 1.5px solid var(--border-subtle); border-radius: 8px; padding: 8px 14px; margin-bottom: 0.8rem; font-size: 1.02rem; color: var(--cyan); font-weight: 700;">
+              Given Data: l = 0.8 m, N = 600, H = 1500 A/m
+            </div>
+
+            <div class="formula-hero" style="margin: 0.5rem 0;">
+              <img src="assets/formulas/eq_prob5.svg" alt="Problem 5 Solution" class="formula-img" style="max-height: 48px;">
+            </div>
+
+            <div style="background: rgba(0, 245, 255, 0.12); border: 2px solid var(--cyan); border-radius: 8px; padding: 10px 16px; margin-top: auto; text-align: center;">
+              <span style="font-family: var(--font-mono); font-size: 1.12rem; font-weight: 800; color: var(--cyan);">
+                ANSWERS: (a) MMF = 1200 AT &nbsp;|&nbsp; (b) Current I = 2 A
+              </span>
+            </div>
+          </div>
+
+          <!-- Problem 6: Complete Air-Path Integration -->
+          <div class="col-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
+              <span class="badge-beee">EXERCISE 6: INTEGRATED SYSTEM</span>
+              <span style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 700; color: var(--green);">FULL SYNTHESIS</span>
+            </div>
+
+            <p style="font-size: 1.1rem; color: #FFFFFF; margin-bottom: 0.8rem; line-height: 1.6;">
+              <strong>Problem Statement:</strong> A coil has <strong>400 turns</strong>, carries <strong>1.5 A</strong>, path length of <strong>0.6 m</strong>, and area of <strong>20 cm&sup2;</strong> in air. Calculate MMF, <span class="m-var">H</span>, and <span class="m-var">B</span>.
+            </p>
+
+            <div style="background: rgba(13, 22, 42, 0.8); border: 1.5px solid var(--border-subtle); border-radius: 8px; padding: 8px 14px; margin-bottom: 0.8rem; font-size: 1.02rem; color: var(--green); font-weight: 700;">
+              Given Data: N = 400, I = 1.5 A, l = 0.6 m, &mu;<sub>0</sub> = 4&pi;&times;10<sup>-7</sup>
+            </div>
+
+            <div class="formula-hero" style="margin: 0.5rem 0;">
+              <img src="assets/formulas/eq_prob6.svg" alt="Problem 6 Solution" class="formula-img" style="max-height: 48px;">
+            </div>
+
+            <div style="background: rgba(52, 211, 153, 0.12); border: 2px solid var(--green); border-radius: 8px; padding: 10px 16px; margin-top: auto; text-align: center;">
+              <span style="font-family: var(--font-mono); font-size: 1.12rem; font-weight: 800; color: var(--green);">
+                ANSWERS: MMF = 600 AT | H = 1000 A/m | B = 1.257 mT
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- SLIDE 14: CONCLUSION & THANK YOU -->
+      <!-- ========================================== -->
+      <div class="slide-container" id="slide-14">
+        <div class="slide-header">
+          <div>
+            <div class="slide-tag">EXECUTIVE SUMMARY</div>
+            <div class="slide-title">14. Conclusion &amp; Key Takeaways</div>
+          </div>
+          <div class="slide-counter">14 / 14</div>
+        </div>
+
+        <div class="grid-2col" style="flex: 1;">
+          <div class="col-card" style="justify-content: space-around;">
+            <div style="display: flex; gap: 16px; align-items: flex-start;">
+              <div style="background: rgba(0, 245, 255, 0.2); color: var(--cyan); border: 1.5px solid var(--cyan); border-radius: 8px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; flex-shrink: 0;">1</div>
+              <div style="font-size: 1.08rem; color: #FFFFFF; line-height: 1.6;">
+                <strong style="color: var(--cyan);">Electric Current Generates Magnetism:</strong> Flowing electric current produces concentric, circular magnetic lines governed by Ampere's Circuital Law.
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 16px; align-items: flex-start;">
+              <div style="background: rgba(0, 245, 255, 0.2); color: var(--cyan); border: 1.5px solid var(--cyan); border-radius: 8px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; flex-shrink: 0;">2</div>
+              <div style="font-size: 1.08rem; color: #FFFFFF; line-height: 1.6;">
+                <strong style="color: var(--cyan);">MMF Drives Magnetic Circuits:</strong> Product of turns and current (<span class="m-var">MMF = NI</span>) represents the total magnetomotive driving potential in ampere-turns.
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 16px; align-items: flex-start;">
+              <div style="background: rgba(0, 245, 255, 0.2); color: var(--cyan); border: 1.5px solid var(--cyan); border-radius: 8px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; flex-shrink: 0;">3</div>
+              <div style="font-size: 1.08rem; color: #FFFFFF; line-height: 1.6;">
+                <strong style="color: var(--cyan);">H is Spatial Intensity:</strong> Magnetising force (<span class="m-var">H = NI/l</span>) is MMF per unit length, purely excitation-dependent and completely independent of the medium.
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 16px; align-items: flex-start;">
+              <div style="background: rgba(0, 245, 255, 0.2); color: var(--cyan); border: 1.5px solid var(--cyan); border-radius: 8px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; flex-shrink: 0;">4</div>
+              <div style="font-size: 1.08rem; color: #FFFFFF; line-height: 1.6;">
+                <strong style="color: var(--cyan);">Constitutive Coupling:</strong> Flux density (<span class="m-var">B</span>) and intensity (<span class="m-var">H</span>) are coupled through material permeability (<span class="m-var">B = &mu;<sub>0</sub>&mu;<sub>r</sub>H</span>).
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 16px; align-items: flex-start;">
+              <div style="background: rgba(0, 245, 255, 0.2); color: var(--cyan); border: 1.5px solid var(--cyan); border-radius: 8px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; flex-shrink: 0;">5</div>
+              <div style="font-size: 1.08rem; color: #FFFFFF; line-height: 1.6;">
+                <strong style="color: var(--cyan);">Air Gap Balance:</strong> Provides mechanical clearance and delays core saturation, requiring calculated ampere-turns during design.
+              </div>
+            </div>
+          </div>
+
+          <!-- Thank You Hero Card -->
+          <div class="col-card" style="align-items: center; justify-content: center; text-align: center; background: radial-gradient(circle at center, rgba(13, 22, 42, 0.98), #03060E);">
+            <div style="font-family: var(--font-mono); font-size: 0.95rem; color: var(--cyan); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.75rem; font-weight: 800;">SEMINAR CONCLUSION</div>
+            <h2 style="font-size: 3.4rem; font-weight: 800; color: #FFFFFF; margin-bottom: 1.0rem; letter-spacing: -0.02em;">
+              THANK YOU
+            </h2>
+            <div style="height: 3px; width: 100px; background: linear-gradient(90deg, transparent, var(--cyan), transparent); margin-bottom: 1.5rem;"></div>
+            <p style="font-size: 1.25rem; color: #FFFFFF; max-width: 480px; margin-bottom: 2.0rem; line-height: 1.6;">
+              We welcome questions, theoretical discussions, and faculty evaluations on Magnetising Force (<span class="m-var">H</span>).
+            </p>
+            <div class="badge-beee" style="padding: 8px 20px; font-size: 0.95rem;">OPEN FOR QUESTIONS &amp; DEFENSE</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Bottom Navigation Bar -->
+  <footer>
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <button class="btn-nav" id="btn-prev" onclick="prevSlide()">
+        <span>◄</span> Previous
+      </button>
+      <button class="btn-nav" id="btn-next" onclick="nextSlide()">
+        Next <span>►</span>
+      </button>
+    </div>
+
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progress-bar"></div>
+    </div>
+
+    <div style="font-family: var(--font-mono); font-size: 1.0rem; font-weight: 700; color: #E2E8F0;">
+      SLIDE <span id="current-slide-num" style="color: var(--cyan); font-weight: 800;">1</span> OF 14
+    </div>
+  </footer>
+
+  <!-- Speaker Notes Modal Drawer -->
+  <div class="notes-drawer" id="notes-drawer">
+    <div class="notes-header">
+      <div class="notes-title">
+        <span>🎙️</span> PRESENTER SCRIPT &amp; FACULTY DEFENSE NOTES
+      </div>
+      <button class="btn-action" style="padding: 4px 12px; font-size: 0.85rem;" onclick="toggleNotes()">✕ Close</button>
+    </div>
+    <div class="notes-text" id="notes-content">
+      Welcome faculty and peers. In today's seminar, we investigate Magnetising Force (H) produced by electric current...
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- HIGH-PERFORMANCE INTERACTIVE JAVASCRIPT -->
+  <!-- ========================================== -->
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 14;
+
+    const presenterNotes = {
+      1: "Good morning respected faculty and peers. Welcome to our seminar presentation on 'Magnetising Force (H) Produced by Electric Current' under Basic Electrical & Electronics Engineering. In this seminar, we will systematically derive the governing laws of magnetic excitation, inspect rotational machine air gaps, and solve verified university numerical problems.",
+      2: "Here on Slide 2, we revisit Oersted's discovery of 1820. An electric current flowing through a wire creates a concentric circular magnetic field. The direction is governed by the Right-Hand Grip Rule: thumb points along conventional current, fingers curl in the direction of flux. In our live canvas on the right, observe how the magnetic field lines pass behind the wire, wrap around, and emerge in front of the conductor in true 3D perspective.",
+      3: "Slide 3 defines Magnetic Flux (Phi) as the total count of magnetic lines of force passing perpendicularly through an area. Measured in Webers, 1 Wb equals 10^8 Maxwell lines. On the right, our interactive angle simulation demonstrates that when theta is 0 degrees, flux is at maximum (Phi = B*A). When rotated to 90 degrees, flux lines graze the surface, dropping total flux to zero.",
+      4: "Slide 4 introduces Magnetomotive Force (MMF), the magnetic driving pressure analogous to EMF. MMF equals turns N multiplied by current I in Ampere-Turns (AT). A single turn carrying 500 A produces the exact same MMF as a 500-turn coil carrying 1 A. Our live simulation demonstrates how increasing turns or current amplifies the magnetic field loops through the core.",
+      5: "On Slide 5, we examine the Hopkinson Duality between electric and magnetic circuits. EMF drives electric current against resistance, dissipating continuous Joule heat. MMF establishes magnetic flux against reluctance, storing potential energy in the magnetic field with zero power required to maintain a static flux once established.",
+      6: "Slide 6 is our academic centerpiece: Magnetising Force (H). Defined as MMF per unit length, H = NI/l in Ampere-Turns per metre. Crucially, H is an excitation intensity completely independent of core material. Whether wound on iron, air, or wood, identical coil turns, current, and length yield the exact same H.",
+      7: "Slide 7 explores the sensitivity of H. H is directly proportional to turns N and current I, but inversely proportional to path length l. On our live sensitivity studio, moving the sliders demonstrates how doubling turns doubles H, while doubling path length cuts H in half. Notice how our live calculation updates instantaneously.",
+      8: "Slide 8 connects flux density B and magnetising force H via permeability: B = mu*H. For air or vacuum, mu_r = 1, so B = mu_0*H. Using our material selector, notice that for the same H = 1000 A/m, silicon steel amplifies flux density thousands of times compared to air.",
+      9: "Slide 9 covers the air gap in electrical machines. As shown in our handwritten notes and Figure 4 schematic, the air gap provides vital mechanical clearance between the stationary field poles and the rotating armature to prevent rubbing, while introducing controlled reluctance that prevents the iron core from saturating prematurely.",
+      10: "Slide 10 highlights real-world engineering applications: electric motors, synchronous generators, step-down transformers, heavy industrial electromagnets, and high-speed protective switchgear relays.",
+      11: "Slides 11 through 13 present step-by-step verified numerical problems. Problem 1 computes MMF = 200 * 3 = 600 AT. Problem 2 computes H = (500 * 2) / 0.5 = 2000 A/m.",
+      12: "Problem 3 synthesizes turn count: N = (800 * 0.4) / 0.5 = 640 turns. Problem 4 computes flux density B = 250 uWb / 50 cm^2 = 0.05 T.",
+      13: "Problem 5 calculates required MMF = 1500 * 0.8 = 1200 AT and current I = 1200 / 600 = 2 A. Problem 6 integrates all variables: MMF = 600 AT, H = 1000 A/m, and B = 1.257 mT in air.",
+      14: "To conclude, electric current produces magnetising force H, which drives flux through magnetic circuits. Thank you for your time and attention. We now welcome questions and faculty evaluations."
+    };
+
+    function showSlide(n) {
+      if (n < 1 || n > totalSlides) return;
+      document.querySelectorAll('.slide-container').forEach(el => el.classList.remove('active'));
+      const target = document.getElementById(`slide-${n}`);
+      if (target) target.classList.add('active');
+      currentSlide = n;
+
+      document.getElementById('current-slide-num').innerText = currentSlide;
+      document.getElementById('progress-bar').style.width = `${(currentSlide / totalSlides) * 100}%`;
+      document.getElementById('btn-prev').disabled = (currentSlide === 1);
+      document.getElementById('btn-next').disabled = (currentSlide === totalSlides);
+
+      document.getElementById('notes-content').innerText = presenterNotes[currentSlide] || "No speaker notes recorded for this slide.";
+    }
+
+    function prevSlide() { if (currentSlide > 1) showSlide(currentSlide - 1); }
+    function nextSlide() { if (currentSlide < totalSlides) showSlide(currentSlide + 1); }
+
+    function toggleNotes() {
+      document.getElementById('notes-drawer').classList.toggle('open');
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    window.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+      else if (e.key.toLowerCase() === 'f') { toggleFullscreen(); }
+      else if (e.key.toLowerCase() === 's') { toggleNotes(); }
+    });
+
+    function fitCanvas(canvas) {
+      if (!canvas || !canvas.parentElement) return false;
+      const rect = canvas.parentElement.getBoundingClientRect();
+      const w = Math.floor(rect.width);
+      const h = Math.floor(rect.height);
+      if (w > 20 && h > 20 && (canvas.width !== w || canvas.height !== h)) {
+        canvas.width = w;
+        canvas.height = h;
+      }
+      return canvas.width > 20 && canvas.height > 20;
+    }
+
+    // 1. Ambient Background Particles
+    const ambCanvas = document.getElementById('ambient-particles');
+    const ambCtx = ambCanvas.getContext('2d');
+    let ambParticles = [];
+
+    function initAmbient() {
+      ambCanvas.width = window.innerWidth;
+      ambCanvas.height = window.innerHeight;
+      ambParticles = [];
+      for (let i = 0; i < 35; i++) {
+        ambParticles.push({
+          x: Math.random() * ambCanvas.width,
+          y: Math.random() * ambCanvas.height,
+          vx: (Math.random() - 0.5) * 0.35,
+          vy: (Math.random() - 0.5) * 0.35,
+          r: Math.random() * 2 + 1
+        });
+      }
+    }
+    window.addEventListener('resize', initAmbient);
+    initAmbient();
+
+    function renderAmbient() {
+      ambCtx.clearRect(0, 0, ambCanvas.width, ambCanvas.height);
+      ambCtx.fillStyle = 'rgba(0, 245, 255, 0.4)';
+      ambCtx.strokeStyle = 'rgba(56, 189, 248, 0.15)';
+      
+      for (let i = 0; i < ambParticles.length; i++) {
+        let p = ambParticles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > ambCanvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > ambCanvas.height) p.vy *= -1;
+
+        ambCtx.beginPath();
+        ambCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ambCtx.fill();
+
+        for (let j = i + 1; j < ambParticles.length; j++) {
+          let p2 = ambParticles[j];
+          let d = Math.hypot(p.x - p2.x, p.y - p2.y);
+          if (d < 120) {
+            ambCtx.lineWidth = 1 - d / 120;
+            ambCtx.beginPath();
+            ambCtx.moveTo(p.x, p.y);
+            ambCtx.lineTo(p2.x, p2.y);
+            ambCtx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(renderAmbient);
+    }
+    renderAmbient();
+
+    // ==========================================
+    // 2. TRUE 3D CONDUCTOR & FIELD LINES (Slide 2)
+    // ==========================================
+    const c2 = document.getElementById('canvas-s2');
+    const ctx2 = c2.getContext('2d');
+    let condCurrent = 3.0;
+    let condDir = 1;
+    let c2Angle = 0;
+
+    function updateConductorSim(v) {
+      condCurrent = parseFloat(v);
+      document.getElementById('lbl-curr').innerText = condCurrent.toFixed(1) + ' A';
+    }
+
+    function reverseCurrent() {
+      condDir *= -1;
+    }
+
+    function renderConductor() {
+      if (fitCanvas(c2) && currentSlide === 2) {
+        const w = c2.width;
+        const h = c2.height;
+        const cx = w / 2;
+        const cy = h / 2;
+
+        ctx2.fillStyle = '#03060E';
+        ctx2.fillRect(0, 0, w, h);
+
+        c2Angle += 0.025 * (condCurrent / 2) * condDir;
+
+        const rings = [
+          { rx: 70, ry: 28, backCol: 'rgba(0, 245, 255, 0.45)', frontCol: 'rgba(0, 245, 255, 0.95)' },
+          { rx: 125, ry: 50, backCol: 'rgba(0, 245, 255, 0.35)', frontCol: 'rgba(0, 245, 255, 0.85)' },
+          { rx: 180, ry: 72, backCol: 'rgba(0, 245, 255, 0.25)', frontCol: 'rgba(0, 245, 255, 0.70)' },
+          { rx: 245, ry: 98, backCol: 'rgba(0, 245, 255, 0.15)', frontCol: 'rgba(0, 245, 255, 0.50)' }
+        ];
+
+        // STEP 1: Draw BACK HALF of rings
+        rings.forEach(ring => {
+          ctx2.beginPath();
+          ctx2.ellipse(cx, cy, ring.rx, ring.ry, 0, Math.PI, Math.PI * 2);
+          ctx2.strokeStyle = ring.backCol;
+          ctx2.lineWidth = 2.5;
+          ctx2.stroke();
+        });
+
+        // STEP 2: Draw VERTICAL COPPER CONDUCTOR
+        const cw = 36;
+        const wireTop = 25;
+        const wireBot = h - 25;
+
+        const grad = ctx2.createLinearGradient(cx - cw/2, 0, cx + cw/2, 0);
+        grad.addColorStop(0, '#5C240E');
+        grad.addColorStop(0.15, '#A04E24');
+        grad.addColorStop(0.5, '#FFAA6E');
+        grad.addColorStop(0.85, '#E58348');
+        grad.addColorStop(1, '#5C240E');
+
+        ctx2.fillStyle = grad;
+        ctx2.fillRect(cx - cw/2, wireTop, cw, wireBot - wireTop);
+        ctx2.strokeStyle = '#FFAA6E';
+        ctx2.lineWidth = 1.5;
+        ctx2.strokeRect(cx - cw/2, wireTop, cw, wireBot - wireTop);
+
+        ctx2.beginPath();
+        ctx2.ellipse(cx, wireTop, cw/2, cw/5, 0, 0, Math.PI * 2);
+        ctx2.fillStyle = '#FFAA6E';
+        ctx2.fill();
+        ctx2.stroke();
+
+        ctx2.beginPath();
+        ctx2.ellipse(cx, wireBot, cw/2, cw/5, 0, 0, Math.PI);
+        ctx2.fillStyle = '#A04E24';
+        ctx2.fill();
+
+        // Pulsing Current Arrow
+        ctx2.strokeStyle = '#FBBF24';
+        ctx2.fillStyle = '#FBBF24';
+        ctx2.lineWidth = 5;
+        const arrowTop = condDir > 0 ? wireTop + 40 : wireBot - 40;
+        const arrowBot = condDir > 0 ? wireBot - 40 : wireTop + 40;
+
+        ctx2.beginPath();
+        ctx2.moveTo(cx, arrowBot);
+        ctx2.lineTo(cx, arrowTop);
+        ctx2.stroke();
+
+        ctx2.beginPath();
+        if (condDir > 0) {
+          ctx2.moveTo(cx - 10, arrowTop + 16);
+          ctx2.lineTo(cx, arrowTop);
+          ctx2.lineTo(cx + 10, arrowTop + 16);
+        } else {
+          ctx2.moveTo(cx - 10, arrowTop - 16);
+          ctx2.lineTo(cx, arrowTop);
+          ctx2.lineTo(cx + 10, arrowTop - 16);
+        }
+        ctx2.fill();
+
+        ctx2.font = 'bold 14px "JetBrains Mono"';
+        ctx2.fillStyle = '#FBBF24';
+        ctx2.textAlign = 'left';
+        ctx2.fillText(condDir > 0 ? 'Current (I) ▲' : 'Current (I) ▼', cx + cw/2 + 12, arrowTop + (condDir > 0 ? 12 : 0));
+
+        // STEP 3: Draw FRONT HALF of rings (Visible in FRONT of conductor!)
+        rings.forEach((ring, idx) => {
+          ctx2.beginPath();
+          ctx2.ellipse(cx, cy, ring.rx, ring.ry, 0, 0, Math.PI);
+          ctx2.strokeStyle = ring.frontCol;
+          ctx2.lineWidth = 3.2;
+          ctx2.shadowColor = '#00F5FF';
+          ctx2.shadowBlur = 12;
+          ctx2.stroke();
+          ctx2.shadowBlur = 0;
+
+          const a = (c2Angle + idx * 1.5) % (Math.PI * 2);
+          const posA = a < 0 ? a + Math.PI * 2 : a;
+          const ax = cx + ring.rx * Math.cos(posA);
+          const ay = cy + ring.ry * Math.sin(posA);
+          const tang = posA + (condDir > 0 ? Math.PI / 2 : -Math.PI / 2);
+
+          if (posA >= 0 && posA <= Math.PI) {
+            ctx2.save();
+            ctx2.translate(ax, ay);
+            ctx2.rotate(tang);
+            ctx2.fillStyle = '#00F5FF';
+            ctx2.shadowColor = '#00F5FF';
+            ctx2.shadowBlur = 12;
+            ctx2.beginPath();
+            ctx2.moveTo(-8, -5);
+            ctx2.lineTo(8, 0);
+            ctx2.lineTo(-8, 5);
+            ctx2.closePath();
+            ctx2.fill();
+            ctx2.restore();
+          }
+        });
+      }
+      requestAnimationFrame(renderConductor);
+    }
+    renderConductor();
+
+    // ==========================================
+    // 3. FLUX ANGLE SIMULATOR (Slide 3)
+    // ==========================================
+    const cFlux = document.getElementById('canvas-flux-sim');
+    const ctxFlux = cFlux.getContext('2d');
+    let fluxThetaDeg = 0;
+
+    function updateFluxAngleSim(v) {
+      fluxThetaDeg = parseFloat(v);
+      document.getElementById('lbl-theta').innerText = fluxThetaDeg.toFixed(0) + '°';
+      const rad = (fluxThetaDeg * Math.PI) / 180;
+      const pct = Math.cos(rad) * 100;
+      document.getElementById('lbl-flux-calc').innerText = `Φ = ${pct.toFixed(0)}% (cos ${fluxThetaDeg.toFixed(0)}° = ${Math.cos(rad).toFixed(2)})`;
+    }
+
+    function renderFluxSim() {
+      if (fitCanvas(cFlux) && currentSlide === 3) {
+        const w = cFlux.width;
+        const h = cFlux.height;
+        const cx = w / 2;
+        const cy = h / 2;
+
+        ctxFlux.fillStyle = '#03060E';
+        ctxFlux.fillRect(0, 0, w, h);
+
+        const rad = (fluxThetaDeg * Math.PI) / 180;
+
+        ctxFlux.strokeStyle = 'rgba(0, 245, 255, 0.4)';
+        ctxFlux.lineWidth = 2;
+        for (let y = 35; y < h - 20; y += 40) {
+          ctxFlux.beginPath();
+          ctxFlux.moveTo(25, y);
+          ctxFlux.lineTo(w - 25, y);
+          ctxFlux.stroke();
+
+          ctxFlux.fillStyle = 'rgba(0, 245, 255, 0.75)';
+          ctxFlux.beginPath();
+          ctxFlux.moveTo(w - 30, y - 4);
+          ctxFlux.lineTo(w - 20, y);
+          ctxFlux.lineTo(w - 30, y + 4);
+          ctxFlux.fill();
+        }
+
+        ctxFlux.font = 'bold 13px "JetBrains Mono"';
+        ctxFlux.fillStyle = '#00F5FF';
+        ctxFlux.fillText('Uniform Magnetic Field B ➔', 25, 28);
+
+        ctxFlux.save();
+        ctxFlux.translate(cx, cy);
+
+        const loopH = 120;
+        const loopW = 85 * Math.cos(rad);
+
+        ctxFlux.fillStyle = `rgba(59, 130, 246, ${0.2 + 0.4 * Math.cos(rad)})`;
+        ctxFlux.strokeStyle = '#00F5FF';
+        ctxFlux.lineWidth = 3.5;
+        ctxFlux.shadowColor = '#00F5FF';
+        ctxFlux.shadowBlur = 14;
+
+        ctxFlux.beginPath();
+        ctxFlux.ellipse(0, 0, Math.max(12, Math.abs(loopW)), loopH / 2, 0, 0, Math.PI * 2);
+        ctxFlux.fill();
+        ctxFlux.stroke();
+        ctxFlux.shadowBlur = 0;
+
+        const normLen = 90;
+        const nx = normLen * Math.sin(rad);
+        const ny = -normLen * Math.cos(rad);
+
+        ctxFlux.strokeStyle = '#FBBF24';
+        ctxFlux.lineWidth = 3.5;
+        ctxFlux.beginPath();
+        ctxFlux.moveTo(0, 0);
+        ctxFlux.lineTo(nx, ny);
+        ctxFlux.stroke();
+
+        ctxFlux.fillStyle = '#FBBF24';
+        ctxFlux.beginPath();
+        ctxFlux.arc(nx, ny, 5, 0, Math.PI * 2);
+        ctxFlux.fill();
+
+        ctxFlux.font = 'bold 13px "JetBrains Mono"';
+        ctxFlux.fillStyle = '#FBBF24';
+        ctxFlux.fillText('n̂ (Surface Normal)', nx + 10, ny);
+
+        ctxFlux.restore();
+      }
+      requestAnimationFrame(renderFluxSim);
+    }
+    renderFluxSim();
+
+    // ==========================================
+    // 4. MMF SOLENOID SIMULATOR (Slide 4)
+    // ==========================================
+    const cMMF = document.getElementById('canvas-mmf');
+    const ctxMMF = cMMF.getContext('2d');
+    let mmfTurns = 25;
+    let mmfCurrent = 4.0;
+    let mmfFlow = 0;
+
+    function updateMMFSim() {
+      mmfTurns = parseInt(document.getElementById('rng-mmf-n').value);
+      mmfCurrent = parseFloat(document.getElementById('rng-mmf-i').value);
+      document.getElementById('lbl-mmf-n').innerText = mmfTurns + ' turns';
+      document.getElementById('lbl-mmf-i').innerText = mmfCurrent.toFixed(1) + ' A';
+      const tot = mmfTurns * mmfCurrent;
+      document.getElementById('lbl-mmf-total').innerText = `MMF = ${tot.toFixed(0)} AT`;
+    }
+
+    function renderMMFSim() {
+      if (fitCanvas(cMMF) && currentSlide === 4) {
+        const w = cMMF.width;
+        const h = cMMF.height;
+        const cx = w / 2;
+        const cy = h / 2;
+
+        ctxMMF.fillStyle = '#03060E';
+        ctxMMF.fillRect(0, 0, w, h);
+
+        mmfFlow += 0.025 * (mmfCurrent / 3);
+
+        const loopCount = 5;
+        for (let i = 1; i <= loopCount; i++) {
+          const rx = (w * 0.42) + i * 20;
+          const ry = (h * 0.22) + i * 24;
+
+          ctxMMF.beginPath();
+          ctxMMF.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2);
+          ctxMMF.strokeStyle = `rgba(0, 245, 255, ${0.15 + 0.1 * (mmfCurrent / 8)})`;
+          ctxMMF.lineWidth = 2;
+          ctxMMF.stroke();
+
+          const dotAngle = (mmfFlow + (i * 1.2)) % (Math.PI * 2);
+          const dx = cx + rx * Math.cos(dotAngle);
+          const dy = cy + ry * Math.sin(dotAngle);
+          ctxMMF.fillStyle = '#00F5FF';
+          ctxMMF.beginPath();
+          ctxMMF.arc(dx, dy, 3, 0, Math.PI * 2);
+          ctxMMF.fill();
+        }
+
+        const coreW = w * 0.65;
+        const coreH = 40;
+        ctxMMF.fillStyle = '#1E293B';
+        ctxMMF.fillRect(cx - coreW/2, cy - coreH/2, coreW, coreH);
+        ctxMMF.strokeStyle = '#38BDF8';
+        ctxMMF.lineWidth = 1.5;
+        ctxMMF.strokeRect(cx - coreW/2, cy - coreH/2, coreW, coreH);
+
+        const visibleTurns = Math.min(35, mmfTurns);
+        const pitch = coreW / visibleTurns;
+        const startX = cx - coreW/2 + pitch/2;
+
+        ctxMMF.strokeStyle = '#F59E0B';
+        ctxMMF.lineWidth = 4;
+        for (let i = 0; i < visibleTurns; i++) {
+          const tx = startX + i * pitch;
+          ctxMMF.beginPath();
+          ctxMMF.ellipse(tx, cy, pitch * 0.45, coreH * 0.85, 0, 0, Math.PI * 2);
+          ctxMMF.stroke();
+        }
+
+        ctxMMF.font = 'bold 14px "JetBrains Mono"';
+        ctxMMF.fillStyle = '#F87171';
+        ctxMMF.fillText('NORTH (N) ➔', cx + coreW/2 - 110, cy - coreH - 12);
+        ctxMMF.fillStyle = '#38BDF8';
+        ctxMMF.fillText('➔ SOUTH (S)', cx - coreW/2 + 10, cy - coreH - 12);
+      }
+      requestAnimationFrame(renderMMFSim);
+    }
+    renderMMFSim();
+
+    // ==========================================
+    // 5. SENSITIVITY STUDIO SIMULATOR (Slide 7)
+    // ==========================================
+    function updateHFactorsSim() {
+      const n = parseInt(document.getElementById('rng-s7-n').value);
+      const i = parseFloat(document.getElementById('rng-s7-i').value);
+      const l = parseFloat(document.getElementById('rng-s7-l').value);
+
+      document.getElementById('lbl-s7-n').innerText = n + ' turns';
+      document.getElementById('lbl-s7-i').innerText = i.toFixed(1) + ' A';
+      document.getElementById('lbl-s7-l').innerText = l.toFixed(2) + ' m';
+
+      document.getElementById('meter-n').style.width = ((n / 800) * 100) + '%';
+      document.getElementById('meter-i').style.width = ((i / 6.0) * 100) + '%';
+      document.getElementById('meter-l').style.width = ((l / 1.2) * 100) + '%';
+
+      document.getElementById('calc-s7-n').innerText = n;
+      document.getElementById('calc-s7-i').innerText = i.toFixed(1);
+      document.getElementById('calc-s7-l').innerText = l.toFixed(2);
+
+      const hVal = (n * i) / l;
+      document.getElementById('lbl-s7-h-result').innerText = `H = ${hVal.toFixed(0)} A/m`;
+    }
+
+    // ==========================================
+    // 6. MATERIAL PERMEABILITY MATRIX (Slide 8)
+    // ==========================================
+    function setMaterialPerm(ur, name, btn) {
+      document.querySelectorAll('.mat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const hFixed = 1000;
+      const mu0 = 4 * Math.PI * 1e-7;
+      const bVal = mu0 * ur * hFixed;
+
+      document.getElementById('lbl-mat-desc').innerText = `For H = 1000 A/m in ${name} (μr = ${ur.toLocaleString()}):`;
+      
+      let bStr = '';
+      if (bVal < 0.1) {
+        bStr = `B = ${(bVal * 1000).toFixed(3)} mT  [${ur}× baseline]`;
+      } else {
+        bStr = `B = ${bVal.toFixed(2)} Tesla (T)  [${ur.toLocaleString()}× baseline!]`;
+      }
+      document.getElementById('lbl-mat-b').innerText = bStr;
+    }
+
+    // ==========================================
+    // 7. AIR GAP TAB SWITCHER & SIMULATOR (Slide 9)
+    // ==========================================
+    function switchAirGapTab(tab) {
+      document.getElementById('btn-tab-fig4').classList.toggle('active', tab === 'fig4');
+      document.getElementById('btn-tab-sim').classList.toggle('active', tab === 'sim');
+      document.getElementById('view-airgap-fig4').style.display = (tab === 'fig4' ? 'flex' : 'none');
+      document.getElementById('view-airgap-sim').style.display = (tab === 'sim' ? 'block' : 'none');
+    }
+
+    const cAir = document.getElementById('canvas-airgap-edu');
+    const ctxAir = cAir.getContext('2d');
+    let airRotorAngle = 0;
+    let airGapWidth = 1.5;
+
+    function updateAirGapSim(v) {
+      airGapWidth = parseFloat(v);
+      document.getElementById('lbl-airgap-w').innerText = airGapWidth.toFixed(1) + ' mm';
+      const safe = airGapWidth >= 1.0;
+      document.getElementById('lbl-airgap-status').innerText = safe ? '✓ Clearance Safe' : '⚠ Warning: Rubbing Risk';
+      document.getElementById('lbl-airgap-status').style.color = safe ? '#34D399' : '#F87171';
+    }
+
+    function renderAirGapSim() {
+      if (fitCanvas(cAir) && currentSlide === 9 && document.getElementById('view-airgap-sim').style.display !== 'none') {
+        const w = cAir.width;
+        const h = cAir.height;
+        const cx = w / 2;
+        const cy = h / 2;
+
+        ctxAir.fillStyle = '#03060E';
+        ctxAir.fillRect(0, 0, w, h);
+
+        airRotorAngle += 0.02;
+
+        const statorR = Math.min(w, h) * 0.40;
+        ctxAir.strokeStyle = '#64748B';
+        ctxAir.lineWidth = 16;
+        ctxAir.beginPath();
+        ctxAir.arc(cx, cy, statorR, 0, Math.PI * 2);
+        ctxAir.stroke();
+
+        ctxAir.fillStyle = '#334155';
+        ctxAir.fillRect(cx - 55, cy - statorR - 12, 110, 26);
+        ctxAir.fillRect(cx - 55, cy + statorR - 14, 110, 26);
+
+        ctxAir.font = 'bold 14px "JetBrains Mono"';
+        ctxAir.fillStyle = '#F87171';
+        ctxAir.fillText('N POLE (Fixed)', cx - 50, cy - statorR + 8);
+        ctxAir.fillStyle = '#38BDF8';
+        ctxAir.fillText('S POLE (Fixed)', cx - 50, cy + statorR - 2);
+
+        const gapPx = airGapWidth * 6;
+        const rotorR = statorR - gapPx - 8;
+
+        ctxAir.save();
+        ctxAir.translate(cx, cy);
+        ctxAir.rotate(airRotorAngle);
+
+        ctxAir.fillStyle = '#1E293B';
+        ctxAir.beginPath();
+        ctxAir.arc(0, 0, rotorR, 0, Math.PI * 2);
+        ctxAir.fill();
+        ctxAir.strokeStyle = '#38BDF8';
+        ctxAir.lineWidth = 2.5;
+        ctxAir.stroke();
+
+        for (let a = 0; a < Math.PI * 2; a += Math.PI / 4) {
+          const sx = (rotorR - 14) * Math.cos(a);
+          const sy = (rotorR - 14) * Math.sin(a);
+          ctxAir.fillStyle = '#F59E0B';
+          ctxAir.beginPath();
+          ctxAir.arc(sx, sy, 7, 0, Math.PI * 2);
+          ctxAir.fill();
+        }
+
+        ctxAir.restore();
+
+        ctxAir.strokeStyle = '#00F5FF';
+        ctxAir.lineWidth = 2;
+        ctxAir.beginPath();
+        ctxAir.arc(cx, cy, statorR - 4, -0.4, 0.4);
+        ctxAir.stroke();
+
+        ctxAir.font = 'bold 12px "JetBrains Mono"';
+        ctxAir.fillStyle = '#00F5FF';
+        ctxAir.fillText(`Air Gap: ${airGapWidth.toFixed(1)} mm`, cx + statorR + 12, cy);
+      }
+      requestAnimationFrame(renderAirGapSim);
+    }
+    renderAirGapSim();
+
+    showSlide(1);
+  </script>
+</body>
+</html>
